@@ -1,0 +1,111 @@
+{
+  "ops": {
+    "interval": 1000
+  },
+  "reporters": {
+    "ConsoleOut": [
+      {
+        "module": "good-squeeze",
+        "name": "Squeeze",
+        "args": [
+          {
+            "log": "*",
+            "request": "*",
+            "response": "*",
+            "error": "*"
+          }
+        ]
+      },
+      {
+        "module": "good-console"
+      },
+      "stdout"
+    ],
+    "HttpFile": [
+      {
+        "module": "good-squeeze",
+        "name": "Squeeze",
+        "args": [
+          {
+            "request": "*",
+            "response": "*"
+          }
+        ]
+      },
+      {
+        "module": "good-squeeze",
+        "name": "SafeJson"
+      },
+      {
+        "module": "rotating-file-stream",
+        "args": [
+          "http-log.json",
+          {
+            "path": "./tmp",
+            "size": "50MB",
+            "interval": "1d",
+            "compress": "gzip",
+            "maxFiles": 15
+          }
+        ]
+      }
+    ],
+    "ServerFile": [
+      {
+        "module": "good-squeeze",
+        "name": "Squeeze",
+        "args": [
+          {
+            "log": "*",
+            "error": "*"
+          }
+        ]
+      },
+      {
+        "module": "good-squeeze",
+        "name": "SafeJson"
+      },
+      {
+        "module": "rotating-file-stream",
+        "args": [
+          "server-log.json",
+          {
+            "path": "./tmp",
+            "size": "50MB",
+            "interval": "1d",
+            "compress": "gzip",
+            "maxFiles": 15
+          }
+        ]
+      }
+    ],
+    "OpsFile": [
+      {
+        "module": "good-squeeze",
+        "name": "Squeeze",
+        "args": [
+          {
+            "ops": "*"
+          }
+        ]
+      },
+      {
+        "module": "good-squeeze",
+        "name": "SafeJson"
+      },
+      {
+        "module": "rotating-file-stream",
+        "args": [
+          "ops-log.json",
+          {
+            "path": "./tmp",
+            "size": "50MB",
+            "interval": "1d",
+            "compress": "gzip",
+            "maxFiles": 15
+          }
+        ]
+      }
+    ]
+  }
+}
